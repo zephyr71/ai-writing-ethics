@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 학술 글쓰기 윤리 가이드 | 광운대학교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kw-red: #C8102E;
+    --kw-red-dark: #9B0C22;
+    --kw-red-light: #E8374F;
+    --kw-red-ultra-light: #FFF0F2;
+    --kw-gold: #B8973A;
+    --kw-gold-light: #D4AF5A;
+    --bg: #FAFAF8;
+    --bg-warm: #F5F3EF;
+    --text-primary: #1A1A1A;
+    --text-secondary: #4A4A4A;
+    --text-muted: #7A7A7A;
+    --border: #E8E4DF;
+    --white: #FFFFFF;
+    --shadow-soft: 0 4px 24px rgba(200,16,46,0.08);
+    --shadow-card: 0 2px 16px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-lg: 20px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--kw-red), var(--kw-gold));
+    z-index: 9999;
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 0 2rem;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--kw-red);
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: var(--kw-red);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 2px;
+    background: var(--kw-red);
+    transform: scaleX(0);
+    transition: var(--transition);
+  }
+
+  .nav-links a:hover { color: var(--kw-red); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--text-primary);
+    transition: var(--transition);
+    border-radius: 2px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1A0208 0%, #2D0614 40%, #C8102E 100%);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 64px;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,16,46,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,16,46,0.15) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+
+  .hero-orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--kw-red-light), transparent);
+    top: -200px; right: -100px;
+  }
+
+  .hero-orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, var(--kw-gold), transparent);
+    bottom: -100px; left: -100px;
+    animation-delay: -4s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(8px);
+    animation: fadeInDown 0.8s ease both;
+  }
+
+  .hero-badge-dot {
+    width: 7px; height: 7px;
+    background: var(--kw-gold-light);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 0.8s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--kw-gold-light);
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 620px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    animation: fadeInDown 0.8s ease 0.2s both;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeInDown 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--kw-red);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    border: 2px solid var(--kw-red);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--kw-red-dark);
+    border-color: var(--kw-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(200,16,46,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    border: 2px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.7);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    animation: fadeInUp 0.8s ease 0.5s both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: left; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--kw-gold-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--kw-red);
+    margin-bottom: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--kw-red);
+    border-radius: 2px;
+  }
+
+  h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── SEARCH ── */
+  .search-section {
+    background: var(--bg-warm);
+    padding: 4rem 2rem;
+  }
+
+  .search-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .search-box h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .search-box p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 16px 56px 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: 100px;
+    font-size: 1rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: white;
+    transition: var(--transition);
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--kw-red);
+    box-shadow: 0 0 0 4px rgba(200,16,46,0.08);
+  }
+
+  .search-btn {
+    position: absolute;
+    right: 6px; top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: var(--kw-red);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-size: 1rem;
+  }
+
+  .search-btn:hover {
+    background: var(--kw-red-dark);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .search-tags {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .search-tag {
+    padding: 6px 14px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-secondary);
+  }
+
+  .search-tag:hover, .search-tag.active {
+    background: var(--kw-red);
+    border-color: var(--kw-red);
+    color: white;
+  }
+
+  #search-results {
+    text-align: left;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .search-result-item {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--kw-red);
+    box-shadow: var(--shadow-card);
+    animation: fadeInUp 0.3s ease both;
+  }
+
+  .search-result-item h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--kw-red-dark);
+  }
+
+  .search-result-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .search-result-item mark {
+    background: rgba(200,16,46,0.15);
+    color: var(--kw-red-dark);
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  .no-result {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* ── OVERVIEW CARDS ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .overview-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .overview-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--kw-red), var(--kw-gold));
+  }
+
+  .overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(200,16,46,0.12);
+  }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    background: var(--kw-red-ultra-light);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .overview-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .overview-card p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  /* ── TIER INTERACTIVE ── */
+  .tier-section {
+    background: linear-gradient(180deg, #1A0208 0%, #0D0106 100%);
+    color: white;
+  }
+
+  .tier-section h2 { color: white; }
+  .tier-section .section-label { color: var(--kw-gold-light); }
+  .tier-section .section-label::before { background: var(--kw-gold-light); }
+
+  .tier-section > .container > p {
+    color: rgba(255,255,255,0.7);
+    max-width: 650px;
+    margin-bottom: 3rem;
+  }
+
+  .tier-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tier-tab {
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .tier-tab:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: white;
+  }
+
+  .tier-tab.active.tier-1 { background: #22C55E; border-color: #22C55E; color: white; }
+  .tier-tab.active.tier-2 { background: #F59E0B; border-color: #F59E0B; color: white; }
+  .tier-tab.active.tier-3 { background: var(--kw-red); border-color: var(--kw-red); color: white; }
+
+  .tier-content { display: none; }
+  .tier-content.active { display: block; animation: fadeInUp 0.4s ease; }
+
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .tier-badge {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .tier-badge.t1 { background: #22C55E; color: white; }
+  .tier-badge.t2 { background: #F59E0B; color: white; }
+  .tier-badge.t3 { background: var(--kw-red); color: white; }
+
+  .tier-header h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.4rem;
+    color: white;
+  }
+
+  .tier-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .tier-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .tier-item:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .tier-item-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .tier-item-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  .tier-item-key {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .tier-item-key strong {
+    color: var(--kw-gold-light);
+  }
+
+  .tier-note {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(200,16,46,0.15);
+    border: 1px solid rgba(200,16,46,0.3);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+  }
+
+  /* ── FAQ ── */
+  .faq-list {
+    max-width: 780px;
+    margin-top: 3rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: var(--transition);
+    background: white;
+  }
+
+  .faq-item.open {
+    box-shadow: var(--shadow-soft);
+    border-color: rgba(200,16,46,0.3);
+  }
+
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-primary);
+    gap: 1rem;
+    transition: var(--transition);
+  }
+
+  .faq-item.open .faq-question { color: var(--kw-red); }
+
+  .faq-icon {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    background: var(--kw-red-ultra-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--kw-red);
+    font-size: 0.9rem;
+    transition: var(--transition);
+    font-weight: 700;
+  }
+
+  .faq-item.open .faq-icon {
+    background: var(--kw-red);
+    color: white;
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-answer-inner {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+  }
+
+  /* ── CHECKLIST INTERACTIVE ── */
+  .checklist-section { background: var(--bg-warm); }
+
+  .checklist-intro {
+    max-width: 650px;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .checklist-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .checklist-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .checklist-card-num {
+    width: 36px; height: 36px;
+    background: var(--kw-red);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .checklist-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 6px;
+    padding-left: 4px;
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .checklist-item:hover { background: var(--kw-red-ultra-light); padding-left: 8px; }
+
+  .checklist-check {
+    width: 22px; height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+    margin-top: 1px;
+    font-size: 0.7rem;
+    color: transparent;
+  }
+
+  .checklist-item.checked .checklist-check {
+    background: var(--kw-red);
+    border-color: var(--kw-red);
+    color: white;
+  }
+
+  .checklist-item span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .checklist-item.checked span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .checklist-progress {
+    margin-top: 2rem;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--kw-red), var(--kw-gold));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-message {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    min-height: 1.5em;
+    transition: var(--transition);
+  }
+
+  .progress-message.complete {
+    color: var(--kw-red);
+    font-weight: 600;
+  }
+
+  /* ── ISSUES SECTION ── */
+  .issues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .issue-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .issue-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .issue-card:hover::after { transform: scaleX(1); }
+
+  .issue-card.plagiarism::after { background: #EF4444; }
+  .issue-card.hallucination::after { background: #F59E0B; }
+  .issue-card.reference::after { background: #8B5CF6; }
+
+  .issue-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+
+  .issue-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.08;
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+  }
+
+  .issue-card.plagiarism .issue-number { color: #EF4444; }
+  .issue-card.hallucination .issue-number { color: #F59E0B; }
+  .issue-card.reference .issue-number { color: #8B5CF6; }
+
+  .issue-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .issue-card.plagiarism .issue-badge { background: #FEE2E2; color: #DC2626; }
+  .issue-card.hallucination .issue-badge { background: #FEF3C7; color: #D97706; }
+  .issue-card.reference .issue-badge { background: #EDE9FE; color: #7C3AED; }
+
+  .issue-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .issue-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .issue-stat {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background: var(--bg-warm);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  .issue-stat strong {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  /* ── PRINCIPLES ── */
+  .principles-section {
+    background: linear-gradient(135deg, var(--kw-red-ultra-light), var(--bg));
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .principle-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .principle-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(200,16,46,0.12);
+  }
+
+  .principle-step {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--kw-red);
+    opacity: 0.12;
+    position: absolute;
+    top: 0.5rem; right: 1rem;
+    line-height: 1;
+  }
+
+  .principle-icon {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, var(--kw-red), var(--kw-red-dark));
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 1.25rem;
+  }
+
+  .principle-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .principle-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── CITATION ── */
+  .citation-section {
+    background: #12060A;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .citation-section .section-label { color: var(--kw-gold-light); }
+  .citation-section .section-label::before { background: var(--kw-gold-light); }
+
+  .citation-section h2 { color: white; margin-bottom: 2rem; }
+
+  .citation-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    font-family: 'Georgia', serif;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .citation-box::before {
+    content: 'APA';
+    position: absolute;
+    top: -12px; left: 20px;
+    background: var(--kw-gold);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .citation-box span.author { font-style: italic; }
+  .citation-box span.title { font-weight: normal; }
+  .citation-box span.journal { font-style: italic; }
+
+  .copy-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+
+  .copy-btn.copied {
+    background: rgba(34,197,94,0.2);
+    border-color: rgba(34,197,94,0.4);
+    color: #86EFAC;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0A0306;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+  }
+
+  footer a { color: var(--kw-red-light); text-decoration: none; }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE NAV ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    z-index: 999;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+  }
+  .mobile-menu a:hover { color: var(--kw-red); }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 4rem 1.25rem; }
+    .hero-content { padding: 5rem 1.25rem 4rem; }
+    .hero-stats { gap: 2rem; }
+    .tier-tabs { gap: 0.5rem; }
+    .tier-tab { padding: 8px 14px; font-size: 0.82rem; }
+  }
+
+  /* Tooltip */
+  [data-tooltip] {
+    position: relative;
+    cursor: help;
+  }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1A1A1A;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  /* Back to top */
+  #back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--kw-red);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 16px rgba(200,16,46,0.4);
+    transition: var(--transition);
+    z-index: 100;
+  }
+  #back-to-top:hover { background: var(--kw-red-dark); transform: translateY(-3px); }
+  #back-to-top.visible { display: flex; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<button id="back-to-top" aria-label="맨 위로">↑</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">KW</div>
+      AI 학술 윤리 가이드
+    </a>
+    <ul class="nav-links">
+      <li><a href="#issues">주요 문제</a></li>
+      <li><a href="#tiers">활용 등급</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#checklist">체크리스트</a></li>
+      <li><a href="#principles">원칙</a></li>
+      <li><a href="#citation">참고문헌</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#issues" onclick="closeMobileMenu()">주요 문제</a>
+  <a href="#tiers" onclick="closeMobileMenu()">활용 등급</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="#checklist" onclick="closeMobileMenu()">체크리스트</a>
+  <a href="#principles" onclick="closeMobileMenu()">원칙</a>
+  <a href="#citation" onclick="closeMobileMenu()">참고문헌</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Advances in Simulation (2025) · Cheng et al.
+    </div>
+    <h1>
+      <em>AI 보조 학술 글쓰기,</em><br>
+      어떻게 윤리적으로 활용할 것인가?
+    </h1>
+    <p class="hero-subtitle">
+      ChatGPT를 비롯한 생성형 AI 도구는 학술 글쓰기에 혁신을 가져왔습니다. 
+      연구자와 일반 대중 모두를 위한 실용적이고 윤리적인 AI 활용 가이드를 소개합니다.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#tiers" class="btn-primary">활용 등급 보기 →</a>
+      <a href="#checklist" class="btn-outline">셀프 체크리스트</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">윤리적 활용 등급</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">핵심 원칙</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">93%</div>
+        <div class="stat-label">AI 생성 참고문헌 오류율</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2025</div>
+        <div class="stat-label">발표 연도</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-box">
+    <h2>🔍 내용 검색</h2>
+    <p>궁금한 키워드를 검색하거나 아래 추천 태그를 클릭하세요</p>
+    <div class="search-input-wrap">
+      <input type="text" class="search-input" id="search-input" placeholder="예: 표절, 환각, 인용, 윤리...">
+      <button class="search-btn" id="search-btn">⌕</button>
+    </div>
+    <div class="search-tags">
+      <button class="search-tag" onclick="doSearch('표절')">표절</button>
+      <button class="search-tag" onclick="doSearch('AI 환각')">AI 환각</button>
+      <button class="search-tag" onclick="doSearch('참고문헌')">참고문헌</button>
+      <button class="search-tag" onclick="doSearch('투명성')">투명성</button>
+      <button class="search-tag" onclick="doSearch('저자')">저자</button>
+      <button class="search-tag" onclick="doSearch('문법')">문법</button>
+      <button class="search-tag" onclick="doSearch('번역')">번역</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <span class="section-label">개요</span>
+    <h2>생성형 AI와 학술 글쓰기의 현재</h2>
+    <div class="overview-grid">
+      <div class="overview-card reveal">
+        <div class="card-icon">🤖</div>
+        <h3>LLM이란 무엇인가?</h3>
+        <p>대형 언어 모델(LLM)은 인터넷 등 방대한 인간 생성 텍스트를 학습하여 통계적 패턴으로 일관된 문장을 생성합니다. ChatGPT가 대표적인 예입니다. 2022년 출시 이후 학술계에 빠르게 확산되었습니다.</p>
+      </div>
+      <div class="overview-card reveal">
+        <div class="card-icon">📖</div>
+        <h3>출판사들의 입장</h3>
+        <p>COPE, ICMJE, WAME 등 주요 학술 기관들은 AI 도구 활용의 투명한 공개를 강조합니다. AI는 공동 저자가 될 수 없으며, 연구팀의 지적 기여가 항상 우선해야 한다고 명시합니다.</p>
+      </div>
+      <div class="overview-card reveal">
+        <div class="card-icon">⚠️</div>
+        <h3>핵심 위험 요소 3가지</h3>
+        <p>학술 글쓰기에서 AI를 사용할 때 가장 경계해야 할 문제는 <strong>표절</strong>, <strong>AI 환각(hallucination)</strong>, <strong>부정확한 참고문헌 생성</strong>입니다. 이 세 가지는 연구 무결성을 심각하게 위협합니다.</p>
+      </div>
+      <div class="overview-card reveal">
+        <div class="card-icon">✅</div>
+        <h3>윤리적 활용의 가능성</h3>
+        <p>저자들은 AI의 활용이 학술 글쓰기의 자연스러운 진화임을 인정합니다. 단, 특정 윤리적 기준을 준수할 때에만 정당하고 가치 있는 도구로 기능한다고 강조합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ISSUES -->
+<section id="issues">
+  <div class="container">
+    <span class="section-label">주요 문제</span>
+    <h2>AI 학술 글쓰기의 3대 위험</h2>
+    <div class="issues-grid">
+      <div class="issue-card plagiarism reveal">
+        <div class="issue-number">01</div>
+        <span class="issue-badge">표절 위험</span>
+        <h3>저작권 침해 & 표절</h3>
+        <p>AI는 공개 데이터로 텍스트를 생성하기 때문에 원본 자료와 유사하거나 동일한 내용을 출력할 수 있습니다. 전문 지식이 없으면 표절 여부를 감지하기 어려워 이중 표절로 이어질 수 있습니다.</p>
+        <div class="issue-stat">
+          <strong>주의</strong>
+          검토·편집 없이 AI 생성 텍스트를 그대로 사용하는 것은 엄격히 금지
+        </div>
+      </div>
+      <div class="issue-card hallucination reveal">
+        <div class="issue-number">02</div>
+        <span class="issue-badge">AI 환각</span>
+        <h3>허위 정보 생성 (Hallucination)</h3>
+        <p>AI는 그럴듯하지만 완전히 허구이거나 사실과 다른 내용을 자신있게 생성합니다. 복잡한 명령을 이해하는 능력이 제한적이며, 의학 초록·증례보고 작성 시 특히 심각한 문제가 됩니다.</p>
+        <div class="issue-stat">
+          <strong>경고</strong>
+          AI는 실제와 허위 데이터를 구별하지 못함 — 반드시 사실 검증 필요
+        </div>
+      </div>
+      <div class="issue-card reference reveal">
+        <div class="issue-number">03</div>
+        <span class="issue-badge">참고문헌 오류</span>
+        <h3>부정확한 참고문헌</h3>
+        <p>ChatGPT가 생성한 50개 연구 프로토콜에서 참고문헌 38%는 잘못된 DOI, 16%는 완전히 허구로 나타났습니다. 다른 연구에서는 AI 생성 참고문헌 중 완전히 정확한 것이 단 7%에 불과했습니다.</p>
+        <div class="issue-stat">
+          <strong data-tooltip="30개 단편 논문 연구 기준">93%</strong>
+          AI 생성 참고문헌의 오류율 (Bhattacharyya et al., 2023)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER INTERACTIVE -->
+<section class="tier-section" id="tiers">
+  <div class="container">
+    <span class="section-label">윤리적 활용 등급</span>
+    <h2>AI를 어떻게 써야 할까?</h2>
+    <p>Cheng 등(2025)은 AI의 학술적 활용을 세 가지 등급으로 분류하여 연구자들에게 실용적인 지침을 제공합니다. 탭을 클릭해 각 등급의 세부 내용을 확인하세요.</p>
+    <div class="tier-tabs">
+      <button class="tier-tab active tier-1" onclick="switchTier(1)">✅ Tier 1 — 윤리적 허용</button>
+      <button class="tier-tab tier-2" onclick="switchTier(2)">⚠️ Tier 2 — 조건부 허용</button>
+      <button class="tier-tab tier-3" onclick="switchTier(3)">🚫 Tier 3 — 윤리적 의심</button>
+    </div>
+
+    <div class="tier-content active" id="tier-1">
+      <div class="tier-header">
+        <span class="tier-badge t1">윤리적 허용</span>
+        <h3>기존 텍스트의 구조적 재편에 활용</h3>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-title">📝 문법 및 맞춤법</div>
+          <div class="tier-item-desc">AI를 통해 문법적으로 올바른 방식으로 내용을 재작성합니다. 원고의 흐름과 문장 구조를 개선하는 데 효과적입니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> 편집된 텍스트가 여전히 본인의 목소리와 비판적 사고를 반영하는지 반드시 확인</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">📖 가독성 향상</div>
+          <div class="tier-item-desc">원고의 흐름과 가독성을 다듬어 독자가 내용을 더 쉽게 이해할 수 있도록 돕습니다. 문장의 명확성을 향상시킵니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> AI 편집이 핵심 의미나 메시지를 변경하지 않았는지 확인</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">🌐 언어 번역</div>
+          <div class="tier-item-desc">비모국어로 논문을 제출하는 연구자에게 유용합니다. 단, 슬랭·문화적 뉘앙스를 포착하지 못할 수 있으므로 원어민 검토 필수입니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> 목표 언어 원어민이 최종 원고의 번역 정확성을 검토해야 함</div>
+        </div>
+      </div>
+      <div class="tier-note">
+        💡 <strong>왜 이 등급이 가장 안전한가?</strong> LLM의 강점인 문법적 구조 생성 능력을 최대한 활용하면서, 비판적 사고가 필요한 영역은 인간이 담당합니다. 아이디어와 통찰은 연구자 본인에게서 나오고, AI는 표현 방식만 다듬는 역할에 그칩니다.
+      </div>
+    </div>
+
+    <div class="tier-content" id="tier-2">
+      <div class="tier-header">
+        <span class="tier-badge t2">조건부 허용</span>
+        <h3>사용 방식에 따라 윤리성이 결정되는 영역</h3>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-title">📋 개요 생성</div>
+          <div class="tier-item-desc">원고 내용이 포함된 프롬프트에서 개요를 생성하도록 요청하는 것은 유용할 수 있습니다. 단순히 "개요를 만들어줘"가 아닌, 구체적인 내용을 제공해야 합니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> AI 생성 개요가 저널 요구사항에 부합하는지 확인</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">📄 내용 요약</div>
+          <div class="tier-item-desc">명확하게 설정된 개념을 더 정교한 요약으로 확장하는 데 활용합니다. 최종 결과물이 연구자 본인의 아이디어와 통찰을 정확히 반영해야 합니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> 최종 결과물이 본인의 아이디어와 통찰을 정확히 반영하는지 확인</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">💡 아이디어 브레인스토밍</div>
+          <div class="tier-item-desc">특정 철학적 입장에 대한 논거 또는 반론을 제안하도록 요청할 수 있습니다. 토론 작성 시 관점을 확장하는 데 도움이 됩니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> AI가 제안한 아이디어에 적절히 출처를 표기하고 정확성 편집 필요</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">✏️ 내용 명확성 향상</div>
+          <div class="tier-item-desc">이미 작성된 초안을 더 강력하고 명확한 버전으로 변환하는 데 활용합니다. 모든 핵심 개념이 프롬프트에 명시되어 있을 때 가장 효과적입니다.</div>
+          <div class="tier-item-key"><strong>핵심 주의사항:</strong> AI 편집이 핵심 의미를 변경하지 않았는지 확인</div>
+        </div>
+      </div>
+      <div class="tier-note">
+        ⚠️ <strong>왜 조건부인가?</strong> 이 등급의 활용은 AI에게 새로운 텍스트를 생성하도록 요청하므로, 비판적 검토 없이 사용할 경우 편향, 환각, 표절의 위험이 높아집니다. 연구자가 AI 생성 콘텐츠를 철저히 검토하고 편집하는 과정이 반드시 필요합니다.
+      </div>
+    </div>
+
+    <div class="tier-content" id="tier-3">
+      <div class="tier-header">
+        <span class="tier-badge t3">윤리적 의심</span>
+        <h3>생성형 AI 활용 권장하지 않음</h3>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-title">✍️ 신규 텍스트 작성 (De Novo)</div>
+          <div class="tier-item-desc">프롬프트에 원본 내용 없이 새로운 텍스트를 작성하도록 요청하는 것은 사실적으로 부정확한 내용을 도입할 위험이 있을 뿐 아니라, 연구자가 원자료와 깊이 교감할 기회를 박탈합니다.</div>
+          <div class="tier-item-key"><strong>이유:</strong> 연구 질문에 대한 깊이 있는 이해를 위한 지적 과정을 단축시킴</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">📊 데이터 해석</div>
+          <div class="tier-item-desc">연구 데이터의 1차 분석을 AI에 맡기는 것은 편향과 환각의 위험을 도입하고, 저자들이 가장 잘 수행해야 할 지적 과정을 단락시킵니다.</div>
+          <div class="tier-item-key"><strong>이유:</strong> 결과를 완전히 이해한 후에만 AI 해석을 비판적으로 평가 가능</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">📚 문헌 검색</div>
+          <div class="tier-item-desc">ChatGPT는 존재하지 않는 완벽한 형식의 참고문헌을 쉽게 생성합니다. AI로 수행한 모든 문헌 검색은 전통적인 검색 엔진으로 반드시 확인해야 하므로 실질적 이점이 없어집니다.</div>
+          <div class="tier-item-key"><strong>이유:</strong> AI 참고문헌의 신뢰성이 지나치게 낮아 독립적 검증 없이 사용 불가</div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-title">⚖️ 윤리적 언어 검토</div>
+          <div class="tier-item-desc">AI 훈련 데이터에 내재된 편향으로 인해 ChatGPT를 사용하면 편향을 제거하는 것이 아니라 오히려 도입하고 영속시킬 수 있습니다. 표절 검토 목적으로도 사용해서는 안 됩니다.</div>
+          <div class="tier-item-key"><strong>이유:</strong> 훈련 세트의 편향 문제로 인해 오히려 편향을 증폭시킬 위험</div>
+        </div>
+      </div>
+      <div class="tier-note">
+        🚫 <strong>왜 권장하지 않는가?</strong> 이 등급의 활용은 학자적 역량 개발을 저해하고, 연구자가 자신의 분야에서 깊이 있는 지식을 쌓을 기회를 빼앗습니다. 비판적으로 생각하고 연구 문제에 깊이 관여하는 역량은 AI로 대체될 수 없습니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <span class="section-label">자주 묻는 질문</span>
+    <h2>연구자들이 가장 궁금해하는 것들</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>ChatGPT를 논문의 공동 저자로 표기해도 될까요?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            아닙니다. COPE, ICMJE, WAME 등 모든 주요 학술 단체는 AI가 저자 기준을 충족하지 못한다고 명시합니다. 학술적 저자권은 연구에 대한 기여뿐 아니라 <strong>책임</strong>을 포함합니다. AI 도구는 원고의 정확성에 대해 책임을 질 수 없고, 제출·출판된 원고를 승인하거나 이후 이의 제기를 지지할 수 없습니다. AI 사용은 방법론 섹션이나 감사의 글에 투명하게 공개해야 합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>AI가 생성한 참고문헌을 그대로 사용해도 되나요?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            절대로 안 됩니다. 연구에 따르면 ChatGPT가 생성한 참고문헌의 <strong>93%</strong>가 완전히 정확하지 않았습니다(Bhattacharyya et al., 2023). 38%는 잘못된 DOI 또는 허구의 DOI를 가지고 있었고, 16%는 완전히 허구였습니다. AI가 생성한 모든 참고문헌은 반드시 원래 출처를 직접 확인해야 합니다. ChatGPT를 참고문헌 검색에 사용하는 것은 저자들이 어차피 전통적인 검색엔진으로 확인해야 하므로 실질적 이점을 제공하지 않습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>AI 활용 사실을 어디에, 어떻게 공개해야 하나요?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            저자들은 원고의 <strong>방법론 섹션</strong>에서 AI 도구 사용을 공개하는 것이 가장 투명하다고 권장합니다. 공개 내용에는 ① AI 도구가 어떻게 사용되었는지, ② AI 생성 출력물이 어떻게 처리되었는지(검토·편집 여부), ③ 원본 정보 출처를 확인했는지 등이 포함되어야 합니다. 일부 저널은 감사의 글 섹션에 명시하는 것도 허용하지만, 원고 끝부분이므로 독자들이 놓칠 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>AI 환각(hallucination)이란 정확히 무엇인가요?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            AI 환각은 생성형 AI 도구가 <strong>설득력 있지만 완전히 날조된</strong> 내용, 말이 안 되는 내용, 또는 사실적으로 부정확한 내용을 사용자 프롬프트에 대한 응답으로 제공하는 현상입니다. AI 도구는 콘텐츠의 정확성이나 진실성을 평가하도록 설계되지 않았기 때문에 발생합니다. 새로운 버전의 ChatGPT는 이전 버전에 비해 개선되었지만, 실제와 허구 데이터를 구별하지 못합니다. 의학 논문 작성 시 이는 잘못된 정보의 확산으로 이어질 수 있어 특히 위험합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Grammarly 같은 AI 글쓰기 도구도 문제가 되나요?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Grammarly와 같이 문법 및 맞춤법 교정에 특화된 AI 작성 도구는 <strong>Tier 1의 가장 윤리적 허용 범주</strong>에 속합니다. 이러한 도구들은 실시간 글쓰기 지원, 문장 재작성 제안, 어조 조정 등을 위해 특별히 설계되어 있으며 ChatGPT와 같은 LLM보다 이러한 목적에 더 적합합니다. 단, 어떤 도구를 사용하든 편집된 텍스트가 여전히 본인의 목소리와 비판적 사고를 반영하는지 반드시 확인해야 합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>AI 과의존이 연구자에게 미치는 장기적 위험은?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Cheng 등은 이것을 심각한 우려 사항으로 지적합니다. 학자들이 아이디어 생성, 1차 텍스트 작성, 초기 데이터 해석에 ChatGPT에 지나치게 의존하게 되면, 이 도움이 <strong>학문적 발전을 저해하는 의존성</strong>으로 쉽게 변질될 수 있습니다. 특히 신진 연구자들이 이러한 기술을 개발하는 데 가장 많은 도움이 필요하지만, 동시에 가장 큰 위험에 처할 수 있습니다. 연구의 궁극적 목표는 우리가 직면한 문제에 대해 깊이 생각하고 근거 기반의 해결책을 제시할 수 있는 연구자를 육성하는 것입니다.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-section" id="checklist">
+  <div class="container">
+    <span class="section-label">셀프 체크리스트</span>
+    <h2>윤리적 AI 활용을 위한 저자 점검표</h2>
+    <p class="checklist-intro">논문에 AI를 활용하기 전, 제출하기 전에 아래 항목을 점검하세요. 항목을 클릭하면 체크할 수 있습니다.</p>
+
+    <div class="checklist-grid">
+      <div class="checklist-card">
+        <div class="checklist-card-header">
+          <div class="checklist-card-num">1</div>
+          <h3>지적 기여도 확인</h3>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>주요 아이디어, 통찰, 해석, 비판적 분석이 나 자신의 것인가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>AI가 연구팀의 지적 기여를 대체하지 않고 보조하는 데 사용되었는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>원자료와 충분히 교감하며 깊이 있는 이해를 구축했는가?</span>
+        </div>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-header">
+          <div class="checklist-card-num">2</div>
+          <h3>학문적 역량 유지</h3>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>핵심 연구 및 글쓰기 기술이 여전히 인간에 의해 수행되고 있는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>AI 활용이 학문적 성장과 역량 개발을 저해하지 않는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>연구자로서의 비판적 사고 능력이 강화되고 있는가?</span>
+        </div>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-header">
+          <div class="checklist-card-num">3</div>
+          <h3>정확성 검증</h3>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>원고의 모든 내용이 정확하고 신뢰할 수 있으며 편향이 없는지 확인했는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>모든 참고문헌이 원래 출처를 통해 직접 검증되었는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>AI 환각, 표절 위험, 편향이 없는지 검토했는가?</span>
+        </div>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-header">
+          <div class="checklist-card-num">4</div>
+          <h3>투명한 공개</h3>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>AI 도구가 어떻게 사용되었는지 정확히 공개했는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>원고의 어느 부분에서 AI가 활용되었는지 명시했는가?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check">✓</div>
+          <span>저널의 AI 활용 공개 지침을 준수했는가?</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-progress">
+      <div class="progress-label">
+        <span>진행 현황</span>
+        <span id="progress-count">0 / 12 완료</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-message" id="progress-message">항목을 클릭하여 체크하세요</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="principles-section" id="principles">
+  <div class="container">
+    <span class="section-label">핵심 원칙</span>
+    <h2>Mann 등(2024)의 LLM 책임 있는 사용 기준 + 확장 원칙</h2>
+    <div class="principles-grid">
+      <div class="principle-card reveal">
+        <div class="principle-step">01</div>
+        <div class="principle-icon">🧠</div>
+        <h3>지적 기여 우선</h3>
+        <p>AI 활용이 연구자 자신의 주요 아이디어, 통찰, 해석, 비판적 분석을 보장하는 방식으로 이루어져야 합니다. 연구자의 지적 기여가 항상 최우선입니다.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-step">02</div>
+        <div class="principle-icon">🎓</div>
+        <h3>학문적 역량 보호</h3>
+        <p>AI 활용이 인간의 핵심 연구 및 글쓰기 기술 유지를 보장하는 방식이어야 합니다. 특히 신진 연구자들의 비판적 사고와 학문적 성장을 저해해서는 안 됩니다.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-step">03</div>
+        <div class="principle-icon">✅</div>
+        <h3>정확성 이중 검증</h3>
+        <p>모든 AI 생성 콘텐츠(참고문헌 포함)를 정확성, 신뢰성, 편향 여부에 대해 이중 점검해야 합니다. 연구자가 원고의 최종 책임자임을 항상 인식해야 합니다.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-step">04</div>
+        <div class="principle-icon">🔍</div>
+        <h3>완전한 투명성</h3>
+        <p>통계 프로그램과 같은 다른 기술 도구와 유사하게, AI 도구의 사용이 명확하고 명시적이며 투명하게 공개되어야 합니다. 이것이 학술적 무결성의 초석입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITATION -->
+<section class="citation-section" id="citation">
+  <div class="container">
+    <span class="section-label">참고문헌</span>
+    <h2>이 가이드의 원천 논문</h2>
+    <div class="citation-box" id="citation-text">
+      <span class="author">Cheng, A., Calhoun, A., & Reedy, G.</span> (2025). Artificial intelligence-assisted academic writing: recommendations for ethical use. <span class="journal">Advances in Simulation, 10</span>, 22. https://doi.org/10.1186/s41077-025-00350-6
+    </div>
+    <button class="copy-btn" id="copy-btn" onclick="copyCitation()">
+      📋 APA 인용 복사
+    </button>
+    <div style="margin-top:2rem; padding: 1.5rem; background: rgba(255,255,255,0.04); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.08);">
+      <p style="font-size:0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">논문 정보</p>
+      <p style="font-size:0.875rem; color: rgba(255,255,255,0.7); line-height: 1.8;">
+        📅 접수: 2025년 2월 27일 &nbsp;|&nbsp; ✅ 승인: 2025년 4월 12일 &nbsp;|&nbsp; 🌐 온라인 발표: 2025년 4월 18일<br>
+        📂 저널: Advances in Simulation &nbsp;|&nbsp; 📖 권호: Volume 10, Article 22<br>
+        🔓 오픈 액세스: Creative Commons Attribution 4.0 International License<br>
+        🏛️ 소속: 앨버타 아동병원/캘거리대(Cheng), 루이빌 의과대(Calhoun), 킹스 칼리지 런던(Reedy)
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>이 웹페이지는 Cheng et al. (2025)의 연구를 기반으로 교육 목적으로 제작되었습니다. &nbsp;|&nbsp; <a href="https://donghunc.kr/blog/" target="_blank">donghunc.kr/blog</a> &nbsp;|&nbsp; 광운대학교</p>
+</footer>
+
+<script>
+// ── PROGRESS BAR ──
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (scrollTop / docHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  const btn = document.getElementById('back-to-top');
+  if (scrollTop > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+document.getElementById('back-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ── HAMBURGER ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+}
+
+// ── REVEAL ON SCROLL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── TIER TABS ──
+function switchTier(n) {
+  document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tier-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tier-tab')[n-1].classList.add('active');
+  document.getElementById('tier-'+n).classList.add('active');
+}
+
+// ── FAQ ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+// ── CHECKLIST ──
+const progressMessages = [
+  '항목을 클릭하여 체크하세요',
+  '시작했습니다! 계속 진행하세요 👍',
+  '잘 하고 있습니다!',
+  '절반 이상 완료했습니다!',
+  '거의 다 됐습니다!',
+  '훌륭합니다! 윤리적 AI 활용을 실천하고 있습니다 🎉'
+];
+
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.checklist-item').length;
+  const checked = document.querySelectorAll('.checklist-item.checked').length;
+  const pct = Math.round((checked / total) * 100);
+
+  document.getElementById('progress-count').textContent = `${checked} / ${total} 완료`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  const msgEl = document.getElementById('progress-message');
+  const idx = Math.floor((checked / total) * (progressMessages.length - 1));
+  msgEl.textContent = progressMessages[idx];
+  msgEl.classList.toggle('complete', checked === total);
+}
+
+// ── SEARCH ──
+const knowledgeBase = [
+  { title: '표절 위험', category: '주요 문제', content: 'AI는 공개 데이터로 텍스트를 생성하기 때문에 원본 자료와 유사하거나 동일한 내용을 출력할 수 있습니다. 전문 지식이 없으면 표절 여부를 감지하기 어렵습니다. 이중 표절의 위험도 있습니다.' },
+  { title: 'AI 환각 (Hallucination)', category: '주요 문제', content: 'AI 환각은 생성형 AI가 설득력 있지만 완전히 허구이거나 사실과 다른 내용을 자신있게 생성하는 현상입니다. 의학 논문에서 특히 위험합니다.' },
+  { title: '참고문헌 오류', category: '주요 문제', content: 'ChatGPT가 생성한 참고문헌의 93%가 정확하지 않습니다. 38%는 잘못된 DOI, 16%는 완전히 허구입니다. AI 참고문헌은 반드시 직접 검증해야 합니다.' },
+  { title: '투명성 공개', category: '윤리 원칙', content: '논문의 방법론 섹션에서 AI 도구 사용을 투명하게 공개해야 합니다. 어떤 도구를 어떻게 사용했는지, AI 생성 내용을 어떻게 처리했는지 명시해야 합니다.' },
+  { title: '저자권 기준', category: '윤리 원칙', content: 'AI는 학술 논문의 공동 저자가 될 수 없습니다. 학술적 저자권은 연구에 대한 기여뿐 아니라 책임을 포함하며, AI는 원고의 정확성에 책임을 질 수 없습니다.' },
+  { title: '문법 및 맞춤법 교정', category: 'Tier 1 (윤리적 허용)', content: 'AI를 통해 문법적으로 올바른 방식으로 내용을 재작성합니다. Grammarly 같은 전문 도구가 더 적합합니다. 편집 후 본인의 목소리를 반영하는지 확인해야 합니다.' },
+  { title: '번역 지원', category: 'Tier 1 (윤리적 허용)', content: 'AI는 비모국어로 논문을 제출하는 연구자에게 유용합니다. 단, 슬랭과 문화적 뉘앙스를 포착하지 못할 수 있으므로 원어민 검토가 필수입니다.' },
+  { title: '가독성 향상', category: 'Tier 1 (윤리적 허용)', content: '원고의 흐름과 가독성을 다듬는 데 AI를 활용할 수 있습니다. AI 편집이 핵심 의미를 변경하지 않았는지 반드시 확인해야 합니다.' },
+  { title: '개요 생성', category: 'Tier 2 (조건부 허용)', content: '원고 내용이 포함된 프롬프트에서 개요를 생성하도록 요청할 수 있습니다. AI 생성 개요가 저널 요구사항에 부합하는지 확인해야 합니다.' },
+  { title: '브레인스토밍', category: 'Tier 2 (조건부 허용)', content: '특정 입장에 대한 논거나 반론을 제안하도록 요청할 수 있습니다. AI가 제안한 아이디어에 적절히 출처를 표기하고 정확성 편집이 필요합니다.' },
+  { title: '신규 텍스트 작성', category: 'Tier 3 (윤리적 의심)', content: '원본 내용 없이 새로운 텍스트를 작성하도록 요청하는 것은 권장하지 않습니다. 사실적으로 부정확한 내용 도입 위험이 있고 연구자의 학문적 참여를 박탈합니다.' },
+  { title: '데이터 해석', category: 'Tier 3 (윤리적 의심)', content: '연구 데이터의 1차 분석을 AI에 맡기는 것은 권장하지 않습니다. 편향과 환각의 위험이 있고 연구자가 직접 수행해야 할 지적 과정을 단락시킵니다.' },
+  { title: '문헌 검색', category: 'Tier 3 (윤리적 의심)', content: 'ChatGPT는 존재하지 않는 참고문헌을 쉽게 생성합니다. AI 문헌 검색은 전통적인 검색엔진으로 반드시 확인해야 하므로 실질적 이점이 없어집니다.' },
+  { title: 'COPE', category: '관련 기관', content: '출판 윤리 위원회(Committee on Publication Ethics). 학술 연구의 높은 윤리적 기준을 수립하고 지원합니다. AI 도구의 학술 글쓰기 활용에 대한 지침을 제공합니다.' },
+  { title: 'ICMJE', category: '관련 기관', content: '국제의학저널편집자위원회(International Committee of Medical Journal Editors). 의학 저널의 학술 연구 수행, 보고, 편집, 출판에 대한 권고사항을 제공합니다.' },
+];
+
+function highlight(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+function doSearch(query) {
+  if (!query) query = document.getElementById('search-input').value.trim();
+  if (!query) return;
+  document.getElementById('search-input').value = query;
+
+  const results = knowledgeBase.filter(item =>
+    item.title.toLowerCase().includes(query.toLowerCase()) ||
+    item.content.toLowerCase().includes(query.toLowerCase()) ||
+    item.category.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const container = document.getElementById('search-results');
+  if (results.length === 0) {
+    container.innerHTML = `<div class="no-result">🔍 "<strong>${query}</strong>"에 대한 결과가 없습니다. 다른 키워드를 시도해보세요.</div>`;
+    return;
+  }
+
+  container.innerHTML = results.map((r, i) => `
+    <div class="search-result-item" style="animation-delay:${i*0.05}s">
+      <h4>${highlight(r.title, query)} <span style="font-size:0.75rem;font-weight:400;color:#999;margin-left:8px">${r.category}</span></h4>
+      <p>${highlight(r.content, query)}</p>
+    </div>
+  `).join('');
+}
+
+document.getElementById('search-btn').addEventListener('click', () => {
+  doSearch(document.getElementById('search-input').value.trim());
+});
+
+document.getElementById('search-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') doSearch(document.getElementById('search-input').value.trim());
+});
+
+// ── COPY CITATION ──
+function copyCitation() {
+  const citation = "Cheng, A., Calhoun, A., & Reedy, G. (2025). Artificial intelligence-assisted academic writing: recommendations for ethical use. Advances in Simulation, 10, 22. https://doi.org/10.1186/s41077-025-00350-6";
+  navigator.clipboard.writeText(citation).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✅ 복사 완료!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 APA 인용 복사';
+      btn.classList.remove('copied');
+    }, 2500);
+  });
+}
+</script>
+</body>
+</html>
